@@ -11,17 +11,17 @@
         }
 
         else if(strcmp($dados[0], "alterar") == 0) {
-            echo "<script> window.location='viewAlterar.php' </script>";
+			$pessoa = select_where(trim($dados[1]));
 
-            $pessoa = select_where(trim($dados[1]));
-            
-            if($pessoa == null) {
-                echo "<script> alert('Usuário não encontrado!') </script>";
-            } else {
-                $url = "viewAlterar.php?id=".trim($dados[1])."&cpf=".$pessoa[0]."&nome=".$pessoa[1]."&endereco=".$pessoa[2]."&telefone=".$pessoa[3];
-                 echo "<script> window.location='".$url."' </script>";   
-            }
-        }
+			if($pessoa == null) {
+				echo "<script> alert('Código da pessoa não encontrado') </script>";
+			}
+			else {		
+				$url = "viewAlterar.php?id=".trim($dados[1])."&cpf=".$pessoa[0]."&nome=".$pessoa[1]."&endereco=".trim($pessoa[2]."&telefone=".$pessoa[3]);
+				echo "<script> window.location='".$url."' </script>";
+			}
+		}
+        
 
         else if(strcmp($dados[0], "remover") == 0) {
             echo "<script> window.location='viewRemover.php?cpf=".$dados[1]."' </script>";
