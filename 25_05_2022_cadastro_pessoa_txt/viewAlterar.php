@@ -33,7 +33,7 @@
                                 value="<?php echo $_GET['id']; ?>"
                                 readonly="true"
                             />
-                            <label for="id">ID do usuário</label>
+                            <label for="id">ID de usuário</label>
                         </div>
                     </div>
                 </div>
