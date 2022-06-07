@@ -1,20 +1,21 @@
 <?php
 
+    include_once ("pessoa.php");
+
     class conexao {
 
-        private $DB_NOME = "desenvolvimentoweb";
-        private $DB_USUARIO = "root@localhost";
-        private $DB_SENHA = "";
+        private $DB_NOME = "tads20_lucas_lourenco";
+        private $DB_USUARIO = "tads20_lucas_lourenco";
+        private $DB_SENHA = "tads20_lucas_lourenco";
         private $DB_CHARSET = "utf8";
  
         public function connection() {
-            $str_conn = "mysql:host=localhost;dbname=".$this->DB_NOME;
+            $str_conn = "mysql:host=wagnerweinert.com.br;dbname=".$this->DB_NOME;
             return new PDO($str_conn, $this->DB_USUARIO, $this->DB_SENHA,
             array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES ".$this->DB_CHARSET));
         }
 
         function select() {
-
             $conn = $this->connection();
             $stmt = $conn->prepare("SELECT * FROM pessoa");
             $stmt->execute();
@@ -23,29 +24,20 @@
 
         function select_where($id) {
             $conn = $this->connection();
-            $stmt = $conn->prepare("SELECT * FROM pessoa WHERE id=$id");
+            $stmt = $conn->prepare("SELECT * FROM pessoa WHERE id=".$id.";");
             $stmt->execute();
             return $stmt;
         }
 
         function insert($pessoa) {
 
-            $fp = fopen('pessoas.txt', 'a+');
+            $sql = "INSERT INTO pessoa(id, cpf, nome, endereco, telefone) VALUES(".$pessoa->id().",".$pessoa->cpf().",".$pessoa->nome().",".$pessoa->endereco().",".$pessoa->telefone().")";
+            
+            $conn = $this->connection();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            return $stmt;
 
-            if ($fp) {
-                foreach($pessoa as $id => $dados) {
-                    if(!empty($dados)) {
-                        fputs($fp, $id);
-                        fputs($fp, "\n");
-                        $linha = $dados['cpf']."#".$dados['nome']."#".$dados['endereco']."#".$dados['telefone'];
-                        fputs($fp, $linha);
-                        fputs($fp, "\n");
-                    }
-                }
-                
-                fclose($fp);
-                echo "<script> alert('Pessoa cadastrada com sucesso!') </script>";
-            }
         }
 
         function update($new, $id) {

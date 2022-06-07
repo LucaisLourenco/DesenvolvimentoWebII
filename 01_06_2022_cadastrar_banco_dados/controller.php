@@ -52,7 +52,14 @@
 
     function loadPessoas() {
 
-        $pessoas = select();
+        $carregarPessoa = new conexao();
+        $pessoa = $carregarPessoa->select();
+
+        $pessoas = array();
+
+        while($objpessoa = $pessoa->fetchObject()) {
+            array_push($pessoas,$objpessoa);
+        }
 
         foreach($pessoas as $id => $dados) {
 
