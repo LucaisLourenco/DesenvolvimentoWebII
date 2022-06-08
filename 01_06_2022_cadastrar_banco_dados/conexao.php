@@ -24,51 +24,28 @@
 
         function select_where($id) {
             $conn = $this->connection();
-            $stmt = $conn->prepare("SELECT * FROM pessoa WHERE id=".$id.";");
+            $stmt = $conn->prepare("SELECT * FROM pessoa WHERE id=".$id);
             $stmt->execute();
             return $stmt;
         }
 
-        function insert($pessoa) {
-
-            $sql = "INSERT INTO pessoa(id, cpf, nome, endereco, telefone) VALUES(".$pessoa->id().",".$pessoa->cpf().",".$pessoa->nome().",".$pessoa->endereco().",".$pessoa->telefone().")";
+        function insert(pessoa $pessoa) {
+            $sql = "INSERT INTO pessoa(id, cpf, nome, endereco, telefone) VALUES(".$pessoa->getId().","."'".$pessoa->getCpf()."'".","."'".$pessoa->getNome()."'".","."'".$pessoa->getEndereco()."'".","."'".$pessoa->getTelefone()."'".")";
             
             $conn = $this->connection();
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             return $stmt;
-
         }
 
-        function update($new, $id) {
+        function update(pessoa $pessoa, $id) {
 
-            $pessoas = select();
+            $sql = "UPDATE pessoa SET id =".$pessoa->getId().",cpf="."'".$pessoa->getCpf()."'".",nome="."'".$pessoa->getNome()."'".",endereco="."'".$pessoa->getEndereco()."'".",telefone="."'".$pessoa->getTelefone()."' WHERE id = ".$pessoa->getId()."";
 
-            $fp = fopen('bkp.txt', 'a+');
-
-            if ($fp) {
-                foreach($pessoas as $chave => $dados) {
-                    if(!empty($dados)) {
-                        fputs($fp, $chave);
-                        if($id == trim($chave)){
-                            foreach($new as $new_id => $new_dados) {
-                                if(!empty($new_dados)) {
-                                    $linha=$new_dados['cpf']."#".$new_dados['nome']."#".$new_dados['endereco']."#".$new_dados['telefone']."\n";
-                                }
-                            }
-                        }
-                        else 
-                            $linha=$dados[0]."#".$dados[1]."#".$dados[2]."#".$dados[3];
-                        fputs($fp, $linha);
-                    }
-                }
-
-                fclose($fp);
-                echo "<script> alert('Pessoa alterada sucesso!') </script>";
-
-                unlink("pessoas.txt");
-                rename("bkp.txt", "pessoas.txt");
-            }
+            $conn = $this->connection();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            return $stmt;
         }
 
         function delete() {

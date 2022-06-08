@@ -49,11 +49,11 @@
         }
 
         public function getEndereco() {
-            return $this->Endereco;
+            return $this->endereco;
         }
 
         public function getTelefone() {
-            return $this->Telefone;
+            return $this->telefone;
         }
     }
 

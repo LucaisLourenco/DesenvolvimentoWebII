@@ -2,7 +2,7 @@
 
     include_once ("controller.php");
 
-    if( !empty($_POST['form_submit']) ) {
+    if(!empty($_POST['form_submit']) ) {
         cadastrar_pessoa();
     }
 ?>
