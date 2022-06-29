@@ -18,11 +18,6 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot()
     {
         Blade::component('components.datalist-cliente', 'datalist-cliente');
