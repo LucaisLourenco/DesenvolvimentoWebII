@@ -26,9 +26,7 @@ class ClienteController extends Controller {
         $dados = session('clientes');
         $clinica = "VetClin DWII";
 
-        // Passa um array "dados" com os "clientes" e a string "clínicas"
         return view('clientes.index', compact(['dados', 'clinica']));
-        // return view('cliente.index')->with('dados', $dados)->with('clinica', $clinica);
     }
 
     public function create() {
@@ -107,7 +105,7 @@ class ClienteController extends Controller {
 
         unset($aux[$index]);
 
-        session(['clientes' => $aux]);
+        session(['clientes' => $dados]);
 
         return redirect()->route('clientes.index');
     }
