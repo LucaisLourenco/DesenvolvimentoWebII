@@ -19,3 +19,4 @@ Route::get('/clinica', function () {
 
 Route::resource('veterinarios', 'VeterinarioController');
 Route::resource('clientes', 'ClienteController');
+Route::resource('especialidades', 'EspecialidadeController');

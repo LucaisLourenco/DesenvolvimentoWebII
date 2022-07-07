@@ -20,6 +20,6 @@ class Datalist extends Component {
 
     public function render() {
 
-        return view('components.datalist-veterinario');
+        return view('components.datalist-especialidade');
     }
 }

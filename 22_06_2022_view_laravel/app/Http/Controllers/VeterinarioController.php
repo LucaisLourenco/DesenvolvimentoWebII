@@ -3,117 +3,78 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Veterinario;
+use App\Models\Especialidade;
 
-class VeterinarioController extends Controller
-{
-    public $veterinarios = [[        
-        "crmv" => 23245,
-        "nome" => "Lucas Gomes Lourenço",
-        "especialidade" => "Cachorros"
-    ]];
-
-    public function __construct() {
-        
-        $auxiliam = session('veterinarios');
-
-        if(!isset($auxiliam)) {
-        
-            session(['veterinarios' => $this->veterinarios]);
-        }
-    }
+class VeterinarioController extends Controller {
     
     public function index() {
         
-        $auxiliam = session('veterinarios');
-        
+        $dados = Veterinario::all();
+        $esp = Especialidade::all();
         $clinica = "VetClin DWII";
 
-        return view('veterinarios.index', compact(['auxiliam', 'clinica']));
+        return view('veterinarios.index', compact(['dados', 'clinica', 'esp']));
     }
 
     public function create() {
-        
-        return view('veterinarios.create');
+
+        $esp = Especialidade::all();
+
+        return view('veterinarios.create', compact(['esp']));
     }
 
    public function store(Request $request) {
+
+    $dados = Especialidade::find($request->especialidade);
         
-        $auxiliam = session('veterinarios');
-
-        $crmvs = array_column($auxiliam, 'crmv');
-
-        if(count($crmvs) > 0) {
-
-            $new_crmv = max($crmvs) + 1;
-        }
-
-        else {
-
-            $new_crmv = 1;   
-        }
-
-        $new_veterinario = [
-            "crmv" => $new_crmv,
-            "nome" => $request->nome,
-            "especialidade" => $request->especialidade
-        ];
-
-        array_push($auxiliam, $new_veterinario);
-        session(['veterinarios' => $auxiliam]);
+    print_r($dados);
+    
+        Veterinario::create([
+            "crmv" => $request->crmv,
+            "nome" => mb_strtoupper($request->nome),
+            "especialidade_id" => $dados->id
+        ]);
 
         return redirect()->route('veterinarios.index');
     }
 
-    public function show($crmv) {
+    public function show($id) {
         
-        $auxiliam = session('veterinarios');
+        $aux = Veterinarios::all();
         
-        $index = array_search($crmv, array_column($auxiliam, 'crmv'));
+        $index = array_search($id, array_column($aux, 'id'));
 
-        $transmitter = $auxiliam[$index];
+        $dados = $aux[$index];
 
-        return view('veterinarios.show', compact('transmitter'));
+        return view('veterinarios.show', compact('dados'));
     }
 
-    public function edit($crmv) {
+    public function edit($id) {
 
-        $auxiliam = session('veterinarios');
-            
-        $index = array_search($crmv, array_column($auxiliam, 'crmv'));
+        $dados = Veterinario::find($id);
+        $esp = Especialidade::all();
 
-        $transmitter = $auxiliam[$index];    
-
-        return view('veterinarios.edit', compact('transmitter'));        
+        return view('veterinarios.edit', compact('dados', 'esp'));        
     }
 
-    public function update(Request $request, $crmv) {
-        
-        $auxiliam = session('veterinarios');
-        
-        $index = array_search($crmv, array_column($auxiliam, 'crmv'));
+    public function update(Request $request, $id) {
 
-        $new_veterinario = [
-            "crmv" => $crmv,
-            "nome" => $request->nome,
-            "especialidade" => $request->especialidade,
-        ];
+        $novo = Veterinario::find($id);
 
-        $auxiliam[$index] = $new_veterinario;
- 
-        session(['veterinarios' => $auxiliam]);
+        $novo->update([
+            "crmv" => $request->crmv,
+            "nome" => mb_strtoupper($request->nome),
+            "especialidade_id" => $request->especialidade
+        ]);
 
         return redirect()->route('veterinarios.index');
     }
 
-    public function destroy($crmv) {
- 
-        $auxiliam = session('veterinarios');
-        
-        $index = array_search($crmv, array_column($auxiliam, 'crmv')); 
+    public function destroy($id) {
 
-        unset($auxiliam[$index]);
-
-        session(['veterinarios' => $auxiliam]);
+        $Veterinario = Veterinario::find($id);
+        $Veterinario->delete();
 
         return redirect()->route('veterinarios.index');
     }

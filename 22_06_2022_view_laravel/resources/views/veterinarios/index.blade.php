@@ -7,9 +7,10 @@
     <div class="row">
         <div class="col">
             <x-datalist-veterinario
-                :header="['CRMV', 'NOME', 'ESPECIALIDADE', 'AÇÕES']" 
-                :data="$auxiliam"
-                :hide="[true, false, true, false]" 
+                :header="['ID', 'CRMV', 'NOME', 'ESPECIALIDADE', 'AÇÕES']" 
+                :data="$dados"
+                :esp="$esp"
+                :hide="[true, false, true, false, true]" 
             />
         </div>
     </div>
