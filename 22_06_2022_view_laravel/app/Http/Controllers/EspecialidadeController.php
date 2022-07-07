@@ -5,6 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Especialidade;
 
+$GLOBALS['regras'] = [
+    'nome' => 'required|max:100|min:10',
+    'descricao' => 'required|max:250|min:20',
+];
+
+$GLOBALS['mensagem']= [
+    "nome.required" => "O preenchimento do campo NOME é obrigatório!",
+    "nome.max" => "O campo NOME possui tamanho máxixo de 100 caracteres!",
+    "nome.min" => "O campo NOME possui tamanho mínimo de 10 caracteres!",
+    "descricao.required" => "O preenchimento do campo DESCRIÇÃO é obrigatório!",
+    "descricao.max" => "O campo DESCRIÇÃO possui tamanho máxixo de 250 caracteres!",
+    "descricao.min" => "O campo DESCRIÇÃO possui tamanho mínimo de 20 caracteres!"
+];
+
 class EspecialidadeController extends Controller {
     
     public function index() {
@@ -21,6 +35,8 @@ class EspecialidadeController extends Controller {
     }
 
    public function store(Request $request) {
+
+        $request->validate($GLOBALS['regras'], $GLOBALS['mensagem']);
         
         Especialidade::create([
             "nome" => mb_strtoupper($request->nome),
@@ -49,6 +65,8 @@ class EspecialidadeController extends Controller {
     }
 
     public function update(Request $request, $id) {
+
+        $request->validate($GLOBALS['regras'], $GLOBALS['mensagem']);
 
         $novo = Especialidade::find($id);
 

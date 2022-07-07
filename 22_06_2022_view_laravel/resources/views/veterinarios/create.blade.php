@@ -10,12 +10,17 @@
             <div class="col" >
                 <div class="form-floating mb-3">
                     <input 
-                        type="text" 
-                        class="form-control" 
+                        type="number" 
+                        class="form-control {{ $errors->has('crmv') ? 'is-invalid' : '' }}" 
                         name="crmv" 
                         placeholder="CRMV"
                         value="{{old('crmv')}}"
                     />
+                    @if($errors->has('crmv'))
+                        <div class='invalid-feedback'>
+                            {{ $errors->first('crmv') }}
+                        </div>
+                    @endif
                     <label for="crmv">CRMV do Veterinário</label>
                 </div>
             </div>
@@ -25,11 +30,16 @@
                 <div class="form-floating mb-3">
                     <input 
                         type="text" 
-                        class="form-control" 
+                        class="form-control {{ $errors->has('nome') ? 'is-invalid' : '' }}" 
                         name="nome" 
                         placeholder="Nome"
                         value="{{old('nome')}}"
                     />
+                    @if($errors->has('nome'))
+                        <div class='invalid-feedback'>
+                            {{ $errors->first('nome') }}
+                        </div>
+                    @endif
                     <label for="nome">Nome do Veterinário</label>
                 </div>
             </div>
@@ -37,13 +47,18 @@
         <div class="row">
             <div class="col" >
                 <div class="form-floating mb-3">
-                    <select name="especialidade" class="form-control">
+                    <select name="especialidade_id" class="form-control {{ $errors->has('especialidade_id') ? 'is-invalid' : '' }}">
                         @foreach ($esp as $item) 
                             <option value="{{$item->id}}">
                                 {{$item->nome}}
                             </option>
                         @endforeach
                     </select>
+                    @if($errors->has('especialidade_id'))
+                        <div class='invalid-feedback'>
+                            {{ $errors->first('especialidade_id') }}
+                        </div>
+                    @endif
                     <label for="especialidade_id">Especialidade do Veterinário</label>
                 </div>
             </div>

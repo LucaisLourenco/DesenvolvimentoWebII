@@ -6,6 +6,23 @@ use Illuminate\Http\Request;
 use App\Models\Veterinario;
 use App\Models\Especialidade;
 
+$GLOBALS['regras'] = [
+    'nome' => 'required|max:100|min:10',
+    'crmv' => 'required|max:10|min:5|unique:veterinarios',
+    'especialidade_id' => 'required'
+];
+
+$GLOBALS['mensagem']= [
+    "nome.required" => "O preenchimento do campo NOME é obrigatório!",
+    "nome.max" => "O campo NOME possui tamanho máxixo de 100 caracteres!",
+    "nome.min" => "O campo NOME possui tamanho mínimo de 10 caracteres!",
+    "crmv.required" => "O preenchimento do campo CRMV é obrigatório!",
+    "crmv.max" => "O campo CRMV possui tamanho máxixo de 10 números!",
+    "crmv.min" => "O campo CRMV possui tamanho mínimo de 5 números!",
+    "crmv.unique" => "O CRMV informado já existe!",
+    "especialidade_id.required" => "O preenchimento do campo ESPECIALIDADE é obrigatório!"
+];
+
 class VeterinarioController extends Controller {
     
     public function index() {
@@ -26,9 +43,9 @@ class VeterinarioController extends Controller {
 
    public function store(Request $request) {
 
-    $dados = Especialidade::find($request->especialidade);
-        
-    print_r($dados);
+    $request->validate($GLOBALS['regras'], $GLOBALS['mensagem']);
+
+    $dados = Especialidade::find($request->especialidade_id);
     
         Veterinario::create([
             "crmv" => $request->crmv,
@@ -60,12 +77,20 @@ class VeterinarioController extends Controller {
 
     public function update(Request $request, $id) {
 
+        $aux_regras = [
+            'nome' => 'required|max:100|min:10',
+            'crmv' => 'required|max:10|min:5',
+            'especialidade_id' => 'required'
+        ];
+
+        $request->validate($aux_regras, $GLOBALS['mensagem']);
+
         $novo = Veterinario::find($id);
 
         $novo->update([
             "crmv" => $request->crmv,
             "nome" => mb_strtoupper($request->nome),
-            "especialidade_id" => $request->especialidade
+            "especialidade_id" => $request->especialidade_id
         ]);
 
         return redirect()->route('veterinarios.index');

@@ -13,7 +13,7 @@
             <div class="form-floating mb-3">
                 <input 
                     type="text" 
-                    class="form-control" 
+                    class="form-control {{ $errors->has('nome') ? 'is-invalid' : '' }}" 
                     name="nome" 
                     placeholder="Nome"
                     value="{{$dados['nome']}}"
@@ -27,11 +27,16 @@
             <div class="form-floating mb-3">
                 <input 
                     type="descricao" 
-                    class="form-control" 
+                    class="form-control {{ $errors->has('descricao') ? 'is-invalid' : '' }}" 
                     name="descricao" 
                     placeholder="E-mail"
                     value="{{$dados['descricao']}}"
                 />
+                @if($errors->has('descricao'))
+                        <div class='invalid-feedback'>
+                            {{ $errors->first('descricao') }}
+                        </div>
+                    @endif
                 <label for="descricao">Descrição da Especialidade</label>
             </div>
         </div>

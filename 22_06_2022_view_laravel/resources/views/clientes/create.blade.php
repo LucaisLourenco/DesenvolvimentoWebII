@@ -12,11 +12,16 @@
                 <div class="form-floating mb-3">
                     <input 
                         type="text" 
-                        class="form-control" 
+                        class="form-control {{ $errors->has('nome') ? 'is-invalid' : '' }}" 
                         name="nome" 
                         placeholder="Nome"
                         value="{{old('nome')}}"
                     />
+                    @if($errors->has('nome'))
+                        <div class='invalid-feedback'>
+                            {{ $errors->first('nome') }}
+                        </div>
+                    @endif
                     <label for="nome">Nome do Cliente</label>
                 </div>
             </div>
@@ -26,11 +31,16 @@
                 <div class="form-floating mb-3">
                     <input 
                         type="email" 
-                        class="form-control" 
+                        class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" 
                         name="email" 
                         placeholder="E-mail"
                         value="{{old('email')}}"
                     />
+                    @if($errors->has('email'))
+                        <div class='invalid-feedback'>
+                            {{ $errors->first('email') }}
+                        </div>
+                    @endif
                     <label for="email">E-mail do Cliente</label>
                 </div>
             </div>

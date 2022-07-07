@@ -5,6 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 
+$GLOBALS['regras'] = [
+    'nome' => 'required|max:100|min:10',
+    'email' => 'required|max:150|min:15',
+];
+
+$GLOBALS['mensagem']= [
+    "nome.required" => "O preenchimento do campo NOME é obrigatório!",
+    "nome.max" => "O campo NOME possui tamanho máxixo de 100 caracteres!",
+    "nome.min" => "O campo NOME possui tamanho mínimo de 10 caracteres!",
+    "email.required" => "O preenchimento do campo E-MAIL é obrigatório!",
+    "email.max" => "O campo E-MAIL possui tamanho máxixo de 100 caracteres!",
+    "email.min" => "O campo E-MAIL possui tamanho mínimo de 10 caracteres!"
+];
+
 class ClienteController extends Controller {
     
     public function index() {
@@ -21,7 +35,9 @@ class ClienteController extends Controller {
     }
 
    public function store(Request $request) {
-        
+
+        $request->validate($GLOBALS['regras'], $GLOBALS['mensagem']);
+    
         Cliente::create([
             "nome" => mb_strtoupper($request->nome),
             "email" => $request->email
@@ -49,6 +65,8 @@ class ClienteController extends Controller {
     }
 
     public function update(Request $request, $id) {
+
+        $request->validate($GLOBALS['regras'], $GLOBALS['mensagem']);
 
         $novo = Cliente::find($id);
 
