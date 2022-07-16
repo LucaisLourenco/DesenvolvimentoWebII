@@ -11,7 +11,7 @@ class DatalistCurso extends Component
     public $hide;
     public $eixos;
 
-    public function __construct($header, $data, $hide, $eixos) {
+    public function __construct($header, $data, $hide, $eixos, $mensagem) {
         $this->header = $header;
         $this->data = $data;    
         $this->hide = $hide;   

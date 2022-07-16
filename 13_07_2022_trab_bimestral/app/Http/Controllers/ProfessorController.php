@@ -102,9 +102,13 @@ class ProfessorController extends Controller
 
     public function destroy($id)
     {
-        $professor = Professor::find($id);
+        try{    
+            $professor = Professor::find($id);
 
-        $professor->delete();
+            $professor->delete();
+        } catch(\Illuminate\Database\QueryException $ex){ 
+            $mensagem = $ex->getMessage(); 
+        }
 
         return redirect()->route('professores.index');
     }        

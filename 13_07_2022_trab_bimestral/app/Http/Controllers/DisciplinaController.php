@@ -64,9 +64,13 @@ class DisciplinaController extends Controller
 
     public function destroy($id)
     {
-        $disciplina = Disciplina::find($id);
+        try {
+            $disciplina = Disciplina::find($id);
 
-        $disciplina->delete();
+            $disciplina->delete();
+        } catch(\Illuminate\Database\QueryException $ex){ 
+            $mensagem = $ex->getMessage(); 
+        }
 
         return redirect()->route('disciplinas.index');
     }
