@@ -21,12 +21,19 @@ class Disciplina_ProfessorController extends Controller
     public function create()
     {
         $disciplina = Disciplina::all();
+        $disciplina_professors = Disciplina_Professor::all();
 
         foreach($disciplina as $dados) {
-            
-            $aux = Disciplina_Professor::find($dados->id);
 
-            if($aux == null) {
+            $aux = 0;
+
+            foreach($disciplina_professors as $item) {
+                if($dados->id == $item->disciplina_id) {
+                    $aux++;
+                } 
+            }
+
+            if($aux == 0) {
                 Disciplina_professor::create([
                     "disciplina_id" => $dados->id,
                     "professor_id" => null
@@ -72,41 +79,6 @@ class Disciplina_ProfessorController extends Controller
                 "disciplina_id" => $disciplinas[$contador]
             ]);
         } 
-
-        return redirect()->route('disciplina_professors.index');
-    }
-
-    public function show($id)
-    {
-        $disciplina_professor = Disciplina_Professor::find($id);
-
-        return view('disciplina_professors.show', compact(['disciplina_professor']));
-    }
-
-    public function edit($id)
-    {
-        $disciplina_professor = Disciplina_Professor::find($id);
-
-        return view('disciplina_professors.edit', compact(['disciplina_professor']));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $new_disciplina_professor = Disciplina_Professor::find($id);
-
-        $new_disciplina_professor->update([
-            "professor_id" => $request->professor_id,
-            "disciplina_id" => $request->disciplina_id
-        ]);
-
-        return redirect()->route('disciplina_professors.index');
-    }
-
-    public function destroy($id)
-    {
-        $disciplina_professor = Disciplina_Professor::find($id);
-
-        $disciplina_professor->delete();
 
         return redirect()->route('disciplina_professors.index');
     }

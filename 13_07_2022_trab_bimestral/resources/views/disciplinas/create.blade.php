@@ -30,7 +30,7 @@
                 <div class="form-floating mb-3">
                     <input 
                         type="number" 
-                        class="form-control {{ $errors->has('sigla') ? 'is-invalid' : '' }}" 
+                        class="form-control {{ $errors->has('carga') ? 'is-invalid' : '' }}" 
                         name="carga" 
                         placeholder="Carga"
                         value="{{old('carga')}}"
@@ -48,6 +48,7 @@
             <div class="col" >
                 <div class="form-floating mb-3">
                     <select name="curso_id" class="form-control {{ $errors->has('curso_id') ? 'is-invalid' : '' }}">
+                    <option value="{{null}}">SELECIONE O CURSO</option>
                         @foreach ($cursos as $item) 
                             <option value="{{$item->id}}">
                                 {{$item->nome}}

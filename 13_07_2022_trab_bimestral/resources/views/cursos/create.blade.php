@@ -67,6 +67,7 @@
             <div class="col" >
                 <div class="form-floating mb-3">
                     <select name="eixo_id" class="form-control {{ $errors->has('eixo_id') ? 'is-invalid' : '' }}">
+                    <option value="{{null}}">SELECIONE O EIXO</option>
                         @foreach ($eixos as $item) 
                             <option value="{{$item->id}}">
                                 {{$item->nome}}
