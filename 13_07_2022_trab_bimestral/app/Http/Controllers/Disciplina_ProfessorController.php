@@ -82,4 +82,13 @@ class Disciplina_ProfessorController extends Controller
 
         return redirect()->route('disciplina_professors.index');
     }
+
+    public function destroy($id)
+    {
+        $disciplina_professors = Disciplina_professor::find($id);
+
+        $disciplina_professors->delete();
+
+        return redirect()->route('disciplina_professors.index');
+    }
 }

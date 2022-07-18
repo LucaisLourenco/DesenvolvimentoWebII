@@ -28,6 +28,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="itens">
                     <ul class="navbar-nav ms-auto">
+                        
                         <li class="nav-item dropdown ps-1">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
