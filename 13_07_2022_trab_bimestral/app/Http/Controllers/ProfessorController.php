@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Professor;
 use App\Models\Eixo;
+use App\Models\Disciplina_Professor;
 
 $GLOBALS['regras'] = [
     'ativo' => 'required',
@@ -104,6 +105,16 @@ class ProfessorController extends Controller
     {
         try{    
             $professor = Professor::find($id);
+            $disciplina_professors = Disciplina_Professor::all();
+                foreach($disciplina_professors as $item) {
+                    if($professor->id == $item->professor_id) {
+                        $aux = Disciplina_Professor::find($item->id);
+                        $aux->update([
+                            "disciplina_id" => $item->disciplina_id,
+                            "professor_id" => null
+                        ]);
+                    }
+                }
 
             $professor->delete();
         } catch(\Illuminate\Database\QueryException $ex){ 

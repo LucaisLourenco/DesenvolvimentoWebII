@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Disciplina;
 use App\Models\Curso;
+use App\Models\Disciplina_Professor;
 
 $GLOBALS['regras'] = [
     'nome' => 'required|max:100|min:10',
@@ -86,8 +87,16 @@ class DisciplinaController extends Controller
     {
         try {
             $disciplina = Disciplina::find($id);
+            $disciplina_professors = Disciplina_Professor::all();
+            foreach($disciplina_professors as $item) {
+                if($disciplina->id == $item->disciplina_id) {
+                    $aux = Disciplina_Professor::find($item->id);
+                    $aux->delete();
+                }
+            }
 
             $disciplina->delete();
+
         } catch(\Illuminate\Database\QueryException $ex){ 
             $mensagem = $ex->getMessage(); 
         }
