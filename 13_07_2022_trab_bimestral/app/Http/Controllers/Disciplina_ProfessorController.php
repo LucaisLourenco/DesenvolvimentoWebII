@@ -41,21 +41,6 @@ class Disciplina_ProfessorController extends Controller
             } 
         }
 
-        $professores = Professor::all();
-        foreach($professores as $dados) {
-            foreach($disciplina_professors as $item) {
-                if($dados->id == $item->professor_id) {
-                    if($dados->ativo != 1) {
-                        $aux = Disciplina_Professor::find($item->id);
-                        $aux->update([
-                            "disciplina_id" => $item->disciplina_id,
-                            "professor_id" => null
-                        ]);
-                    }
-                }
-            }
-        }
-
         return redirect()->route('disciplina_professors.index');
     }
 

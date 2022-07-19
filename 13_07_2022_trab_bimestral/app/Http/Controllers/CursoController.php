@@ -90,11 +90,13 @@ class CursoController extends Controller
 
     public function destroy($id)
     {
-        try {    
+        try 
+        {    
             $curso = Curso::find($id);
-
             $curso->delete();
-        }   catch(\Illuminate\Database\QueryException $ex){ 
+
+        }   catch(\Illuminate\Database\QueryException $ex)
+        { 
             $mensagem = $ex->getMessage(); 
         }
 

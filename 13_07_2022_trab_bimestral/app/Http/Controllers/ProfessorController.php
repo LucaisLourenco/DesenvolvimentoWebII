@@ -98,12 +98,26 @@ class ProfessorController extends Controller
             "ativo" => $request->ativo
         ]);
 
+        $disciplina_professors = Disciplina_Professor::all();
+        foreach($disciplina_professors as $item) {
+            if($new_professor->id == $item->professor_id) {
+                if($new_professor->ativo != 1) {
+                    $aux = Disciplina_Professor::find($item->id);
+                    $aux->update([
+                        "disciplina_id" => $item->disciplina_id,
+                        "professor_id" => null
+                    ]);
+                }
+            }
+        }
+
         return redirect()->route('professores.index');
     }
 
     public function destroy($id)
     {
-        try{    
+        try
+        {    
             $professor = Professor::find($id);
             $disciplina_professors = Disciplina_Professor::all();
                 foreach($disciplina_professors as $item) {
@@ -117,7 +131,9 @@ class ProfessorController extends Controller
                 }
 
             $professor->delete();
-        } catch(\Illuminate\Database\QueryException $ex){ 
+            
+        } catch(\Illuminate\Database\QueryException $ex)
+        { 
             $mensagem = $ex->getMessage(); 
         }
 

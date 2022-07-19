@@ -85,7 +85,8 @@ class DisciplinaController extends Controller
 
     public function destroy($id)
     {
-        try {
+        try 
+        {
             $disciplina = Disciplina::find($id);
             $disciplina_professors = Disciplina_Professor::all();
             foreach($disciplina_professors as $item) {
@@ -97,7 +98,8 @@ class DisciplinaController extends Controller
 
             $disciplina->delete();
 
-        } catch(\Illuminate\Database\QueryException $ex){ 
+        } catch(\Illuminate\Database\QueryException $ex)
+        { 
             $mensagem = $ex->getMessage(); 
         }
 

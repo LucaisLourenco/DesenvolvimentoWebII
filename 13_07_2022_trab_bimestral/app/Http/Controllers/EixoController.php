@@ -70,11 +70,13 @@ class EixoController extends Controller {
 
     public function destroy($id)
     {
-        try{
+        try
+        {
             $eixo = Eixo::find($id);
-
             $eixo->delete();
-        } catch(\Illuminate\Database\QueryException $ex){ 
+            
+        } catch(\Illuminate\Database\QueryException $ex)
+        { 
             $mensagem = $ex->getMessage(); 
         }
 
