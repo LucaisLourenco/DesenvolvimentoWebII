@@ -65,7 +65,7 @@ class Disciplina_ProfessorController extends Controller
         }
 
         $count = 0;
-
+        
         foreach($request->id as $dados) {
             $id[$count] = $dados;
             $count++;
