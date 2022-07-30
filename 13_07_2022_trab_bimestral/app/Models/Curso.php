@@ -10,4 +10,12 @@ class Curso extends Model
     use HasFactory;
 
     protected $fillable = ['nome', 'sigla', 'tempo', 'eixo_id'];
+
+    public function disciplina() {
+        return $this->hasMany('\App\Models\Disciplina');
+    }
+
+    public function eixo() {
+        return $this->belongsTo('App\Models\Eixo');
+    }
 }
