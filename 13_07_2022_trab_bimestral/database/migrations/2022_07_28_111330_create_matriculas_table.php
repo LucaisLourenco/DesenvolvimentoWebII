@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('disciplina__alunos');
+        Schema::dropIfExists('matriculas');
     }
 };

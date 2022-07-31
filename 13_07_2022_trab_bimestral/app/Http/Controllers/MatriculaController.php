@@ -4,16 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Aluno;
-use App\Models\Disciplina;
-use App\Models\Matricula;
-
 
 class MatriculaController extends Controller
 {
-
     public function index()
     {
-        
+        //
     }
 
     public function create()
@@ -28,12 +24,7 @@ class MatriculaController extends Controller
 
     public function show($id)
     {
-        $alunos = Aluno::find($id);
-        dd($alunos);
-        //$alunos = Aluno::with(['curso'])->get();
-        //$alunos->toJson();
 
-       // return view('disciplina_alunos.index', compact(['alunos']));
     }
 
     public function edit($id)
@@ -51,11 +42,10 @@ class MatriculaController extends Controller
         //
     }
 
-    public function matriculas($id)
-    {
-     //   $aluno = Matricula::with(['aluno'])->get();
-   //     $aluno = toJson();
-        
-        echo "teste";
+    public function listar($id) {
+        $alunos = Aluno::with(['disciplina'])->get()->find($id);
+        $alunos->toJson();
+
+        return view('matricula.index', compact(['aluno']));
     }
 }
