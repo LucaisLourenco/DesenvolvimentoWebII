@@ -12,8 +12,7 @@ class Aluno extends Model
     protected $fillable = ['nome','curso_id'];
 
     public function disciplina() {
-        return $this->belongsToMany('\App\Models\Disciplina')
-            ->withPivot('descricao');
+        return $this->belongsToMany('\App\Models\Disciplina', 'matriculas');
     }
 
     public function curso() {

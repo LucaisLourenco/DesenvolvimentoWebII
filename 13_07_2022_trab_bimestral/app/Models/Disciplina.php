@@ -16,10 +16,10 @@ class Disciplina extends Model
     }
 
     public function aluno() {
-        return $this->belongsToMany('\App\Models\Aluno');
+        return $this->belongsToMany('\App\Models\Aluno', 'matriculas');
     }
 
     public function professor() {
-        return $this->belongsToMany('\App\Models\Professor');
+        return $this->belongsTo('\App\Models\Professor');
     }
 }

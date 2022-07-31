@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MatriculaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,5 @@ Route::resource('disciplinas', 'DisciplinaController');
 Route::resource('professores', 'ProfessorController');
 Route::resource('disciplina_professors', 'Disciplina_ProfessorController');
 Route::resource('alunos', 'AlunoController');
-
-
-
-
+Route::resource('matriculas', 'MatriculaController');
+Route::get('/matriculas/{id}', [MatriculaController::class, 'matriculas'])->name('matricula.matriculas');
