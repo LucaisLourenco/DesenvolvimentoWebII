@@ -25,4 +25,5 @@ Route::resource('professores', 'ProfessorController');
 Route::resource('disciplina_professors', 'Disciplina_ProfessorController');
 Route::resource('alunos', 'AlunoController');
 Route::resource('matriculas', 'MatriculaController');
-Route::get('/listar/{id}', [MatriculaController::class, 'listar'])->name('matricula.listar');
+Route::get('/listar/{id}', [MatriculaController::class, 'listar'])->name('matriculas.listar');
+Route::get('/gravar/{id}', [MatriculaController::class, 'gravar'])->name('matriculas.gravar');
