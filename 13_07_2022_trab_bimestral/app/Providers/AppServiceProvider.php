@@ -29,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.datalist-disciplina', 'datalist-disciplina');
         Blade::component('components.datalist-professor', 'datalist-professor');
         Blade::component('components.datalist-disciplina-professor', 'datalist-disciplina-professor');
-
+        Blade::component('components.datalist-aluno', 'datalist-aluno');
     }
 }

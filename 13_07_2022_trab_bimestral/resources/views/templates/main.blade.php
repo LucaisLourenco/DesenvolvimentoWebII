@@ -40,6 +40,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{route('professores.index')}}" class="dropdown-item">Professores</a></li>
+                                <li><a href="{{route('alunos.index')}}" class="dropdown-item">Alunos</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown ps-1">

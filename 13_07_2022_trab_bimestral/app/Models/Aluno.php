@@ -9,7 +9,7 @@ class Aluno extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome'];
+    protected $fillable = ['nome','curso_id'];
 
     public function disciplina() {
         return $this->belongsToMany('\App\Models\Disciplina')
