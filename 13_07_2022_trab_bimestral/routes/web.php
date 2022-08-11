@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MatriculaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +14,11 @@ use App\Http\Controllers\MatriculaController;
 */
 
 Route::get('/', function () {
-    return view('templates.main')->with('titulo');
-})->name('index');
+    return view('welcome');
+});
 
-Route::resource('eixos', 'EixoController');
-Route::resource('cursos', 'CursoController');
-Route::resource('disciplinas', 'DisciplinaController');
-Route::resource('professores', 'ProfessorController');
-Route::resource('disciplina_professors', 'Disciplina_ProfessorController');
-Route::resource('alunos', 'AlunoController');
-Route::resource('matriculas', 'MatriculaController');
-Route::get('/listar/{id}', [MatriculaController::class, 'listar'])->name('matriculas.listar');
-Route::get('/gravar/{id}', [MatriculaController::class, 'gravar'])->name('matriculas.gravar');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
