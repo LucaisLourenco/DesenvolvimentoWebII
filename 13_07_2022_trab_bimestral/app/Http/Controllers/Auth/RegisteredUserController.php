@@ -21,7 +21,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        $types=Type::orderBy('nome')->get();
+        $types = Type::orderBy('nome')->get();
 
         return view('auth.register', compact('types'));
     }
