@@ -35,7 +35,7 @@ class CursoController extends Controller
         $eixos = Eixo::all();
 
         if(!UserPermissions::isAuthorized('cursos.index')) {
-            abort(403);
+            return view('acessonegado.index');
         }
 
         return view('cursos.index', compact(['cursos','eixos']));
