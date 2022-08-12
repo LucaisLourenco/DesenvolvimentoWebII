@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Aluno;
 use App\Models\Curso;
+use App\Facades\UserPermissions;
 
 class AlunoController extends Controller
 {
    
     public function index()
     {
+        if(!UserPermissions::isAuthorized('cursos.index')) {
+            return view('acessonegado.index');
+        }
+
         $alunos = Aluno::with(['curso'])->get();
         $alunos->toJson();
 
@@ -19,6 +24,10 @@ class AlunoController extends Controller
 
     public function create()
     {
+        if(!UserPermissions::isAuthorized('cursos.index')) {
+            return view('acessonegado.index');
+        }
+
         $cursos = Curso::all();
 
         return view('alunos.create', compact(['cursos']));
@@ -37,11 +46,15 @@ class AlunoController extends Controller
 
     public function show($id)
     {
-        //
+        
     }
 
     public function edit($id)
     {
+        if(!UserPermissions::isAuthorized('cursos.index')) {
+            return view('acessonegado.index');
+        }
+
         $aluno = Aluno::find($id);
         $cursos = Curso::all();
 
@@ -63,6 +76,10 @@ class AlunoController extends Controller
 
     public function destroy($id)
     {
+        if(!UserPermissions::isAuthorized('cursos.index')) {
+            return view('acessonegado.index');
+        }
+
         try 
         {    
             $aluno = Aluno::find($id);

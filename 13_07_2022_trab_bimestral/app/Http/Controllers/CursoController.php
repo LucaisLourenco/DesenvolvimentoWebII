@@ -43,6 +43,10 @@ class CursoController extends Controller
 
     public function create()
     {
+        if(!UserPermissions::isAuthorized('cursos.index')) {
+            return view('acessonegado.index');
+        }
+
         $eixos = Eixo::all();
 
         return view('cursos.create', compact(['eixos']));
@@ -64,6 +68,10 @@ class CursoController extends Controller
 
     public function show($id)
     {
+        if(!UserPermissions::isAuthorized('cursos.index')) {
+            return view('acessonegado.index');
+        }
+
         $curso = Curso::find($id);
 
         return view('cursos.show', compact(['curso']));
@@ -71,6 +79,10 @@ class CursoController extends Controller
 
     public function edit($id)
     {
+        if(!UserPermissions::isAuthorized('cursos.index')) {
+            return view('acessonegado.index');
+        }
+
         $curso = Curso::find($id);
         $eixos = Eixo::all();
 
@@ -95,6 +107,10 @@ class CursoController extends Controller
 
     public function destroy($id)
     {
+        if(!UserPermissions::isAuthorized('cursos.index')) {
+            return view('acessonegado.index');
+        }
+
         try 
         {    
             $curso = Curso::find($id);
