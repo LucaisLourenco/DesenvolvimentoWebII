@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Curso;
 use App\Models\Eixo;
+use App\Facades\UserPermissions;
 
 $GLOBALS['regras'] = [
     'nome' => 'required|max:50|min:10',
@@ -32,6 +33,10 @@ class CursoController extends Controller
     {
         $cursos = Curso::all();
         $eixos = Eixo::all();
+
+        if(!UserPermissions::isAuthorized('cursos.index')) {
+            abort(403);
+        }
 
         return view('cursos.index', compact(['cursos','eixos']));
     }

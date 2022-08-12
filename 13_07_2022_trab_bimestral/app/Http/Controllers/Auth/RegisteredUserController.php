@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use App\Models\Type;
 use App\Models\Permission;
+use App\Facades\UserPermissions;
+
 
 class RegisteredUserController extends Controller
 {

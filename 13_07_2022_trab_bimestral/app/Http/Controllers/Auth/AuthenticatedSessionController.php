@@ -7,7 +7,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Permission;
+use App\Http\Controllers\PermissionController;
+use App\Facades\UserPermissions;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -33,7 +34,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        PermissionController::loadPermissions(Auth::user()->type_id);
+        UserPermissions::loadPermissions(Auth::user()->type_id);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
