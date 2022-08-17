@@ -65,23 +65,29 @@ class Disciplina_ProfessorController extends Controller
 
         $count = 0;
 
-        foreach($request->professor_id as $dados) {
-              $professores[$count] = $dados;
-              $count++;
+        if ($request->professor_id != null) {
+            foreach($request->professor_id as $dados) {
+                $professores[$count] = $dados;
+                $count++;
+            }
         }
 
         $count = 0;
 
-        foreach($request->disciplina_id as $dados) {
-            $disciplinas[$count] = $dados;
-            $count++;
+        if ($request->disciplina_id != null) {
+            foreach($request->disciplina_id as $dados) {
+                $disciplinas[$count] = $dados;
+                $count++;
+            }
         }
 
         $count = 0;
         
-        foreach($request->id as $dados) {
-            $id[$count] = $dados;
-            $count++;
+        if ($request->id != null) {
+            foreach($request->id as $dados) {
+                $id[$count] = $dados;
+                $count++;
+            }
         }
 
         for($contador = 0; $contador < $count; $contador++) {

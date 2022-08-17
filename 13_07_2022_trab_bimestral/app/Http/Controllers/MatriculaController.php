@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Aluno;
 use App\Models\Disciplina;
 use App\Models\Matricula;
+use App\Facades\UserPermissions;
 
 class MatriculaController extends Controller
 {

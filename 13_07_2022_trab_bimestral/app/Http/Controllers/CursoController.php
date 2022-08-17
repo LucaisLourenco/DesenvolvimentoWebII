@@ -16,13 +16,13 @@ $GLOBALS['regras'] = [
 
 $GLOBALS['mensagem']= [
     "nome.required" => "O preenchimento do campo NOME é obrigatório!",
-    "nome.max" => "O campo NOME possui tamanho máxixo de 50 caracteres!",
+    "nome.max" => "O campo NOME possui tamanho máximo de 50 caracteres!",
     "nome.min" => "O campo NOME possui tamanho mínimo de 10 caracteres!",
     "sigla.required" => "O preenchimento do campo SIGLA é obrigatório!",
-    "sigla.max" => "O campo SIGLA possui tamanho máxixo de 8 caracteres!",
+    "sigla.max" => "O campo SIGLA possui tamanho máximo de 8 caracteres!",
     "sigla.min" => "O campo SIGLA possui tamanho mínimo de 2 caracteres!",
     "tempo.required" => "O preenchimento do campo TEMPO é obrigatório!",
-    "tempo.max" => "O campo TEMPO possui tamanho máxixo de 2 dígitos!",
+    "tempo.max" => "O campo TEMPO possui tamanho máximo de 2 dígitos!",
     "tempo.min" => "O campo TEMPO possui tamanho mínimo de 1 dígito!",
     "eixo_id.required" => "O preenchimento do campo EIXO é obrigatório!"
 ];
