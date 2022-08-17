@@ -83,7 +83,7 @@ class EixoController extends Controller {
         $new_eixo = Eixo::find($id);
 
         $new_eixo->update([
-            "nome" => $request->nome
+            "nome" => mb_strtoupper($request->nome)
         ]);
 
         return redirect()->route('eixos.index');
