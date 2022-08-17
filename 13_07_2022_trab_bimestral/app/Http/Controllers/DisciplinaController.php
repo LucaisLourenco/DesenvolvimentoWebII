@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Disciplina;
 use App\Models\Curso;
 use App\Models\Disciplina_Professor;
+use App\Facades\UserPermissions;
 
 $GLOBALS['regras'] = [
     'nome' => 'required|max:100|min:10',
@@ -27,6 +28,10 @@ class DisciplinaController extends Controller
 {
     public function index()
     {
+        if(!UserPermissions::isAuthorized('disciplinas.index')) {
+            return view('acessonegado.index');
+        }
+
         $disciplinas = Disciplina::all();
         $cursos = Curso::all();
 
@@ -35,6 +40,10 @@ class DisciplinaController extends Controller
 
     public function create()
     {
+        if(!UserPermissions::isAuthorized('disciplinas.create')) {
+            return view('acessonegado.index');
+        }
+
         $cursos = Curso::all();
 
         return view('disciplinas.create', compact(['cursos']));
@@ -42,6 +51,10 @@ class DisciplinaController extends Controller
 
     public function store(Request $request)
     {
+        if(!UserPermissions::isAuthorized('disciplinas.create')) {
+            return view('acessonegado.index');
+        }
+
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
         Disciplina::create([
@@ -62,6 +75,10 @@ class DisciplinaController extends Controller
 
     public function edit($id)
     {
+        if(!UserPermissions::isAuthorized('disciplinas.edit')) {
+            return view('acessonegado.index');
+        }
+
         $disciplina = Disciplina::find($id);
         $cursos = Curso::all();
 
@@ -70,6 +87,10 @@ class DisciplinaController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!UserPermissions::isAuthorized('disciplinas.edit')) {
+            return view('acessonegado.index');
+        }
+
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
         $new_disciplina = Disciplina::find($id);
@@ -85,6 +106,10 @@ class DisciplinaController extends Controller
 
     public function destroy($id)
     {
+        if(!UserPermissions::isAuthorized('disciplinas.destroy')) {
+            return view('acessonegado.index');
+        }
+
         try 
         {
             $disciplina = Disciplina::find($id);

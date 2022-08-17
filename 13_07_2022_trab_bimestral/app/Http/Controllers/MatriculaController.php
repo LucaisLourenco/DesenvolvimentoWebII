@@ -21,6 +21,10 @@ class MatriculaController extends Controller
 
     public function store(Request $request)
     {
+        if(!UserPermissions::isAuthorized('matriculas.create')) {
+            return view('acessonegado.index');
+        }
+
         $aluno = Aluno::find($request->aluno_id);
         $aluno->disciplina()->detach();
 
@@ -60,6 +64,11 @@ class MatriculaController extends Controller
     }
 
     public function listar($id) {
+        
+        if(!UserPermissions::isAuthorized('matriculas.index')) {
+            return view('acessonegado.index');
+        }
+
         $aluno = Aluno::with(['disciplina'])->get()->find($id);
         $aluno->toJson();
 
@@ -68,6 +77,10 @@ class MatriculaController extends Controller
 
     public function gravar($id) 
     {
+        if(!UserPermissions::isAuthorized('matriculas.create')) {
+            return view('acessonegado.index');
+        }
+
         $disciplinas = Disciplina::all();
         $aluno = Aluno::with(['disciplina'])->get()->find($id);
 

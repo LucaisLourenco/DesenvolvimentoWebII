@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Eixo;
+use App\Facades\UserPermissions;
 
 $GLOBALS['regras'] = [
     'nome' => 'required|max:50|min:10',
@@ -19,6 +20,10 @@ class EixoController extends Controller {
     
     public function index()
     {
+        if(!UserPermissions::isAuthorized('eixos.index')) {
+            return view('acessonegado.index');
+        }
+
         $eixos = Eixo::all();
         $instituto = "IFPR DWII";
 
@@ -27,11 +32,19 @@ class EixoController extends Controller {
 
     public function create()
     {
+        if(!UserPermissions::isAuthorized('eixos.create')) {
+            return view('acessonegado.index');
+        }
+
         return view('eixos.create');
     }
 
     public function store(Request $request)
     {
+        if(!UserPermissions::isAuthorized('eixos.create')) {
+            return view('acessonegado.index');
+        }
+
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
         Eixo::create([
@@ -50,6 +63,10 @@ class EixoController extends Controller {
 
     public function edit($id)
     {
+        if(!UserPermissions::isAuthorized('eixos.edit')) {
+            return view('acessonegado.index');
+        }
+
         $eixo = Eixo::find($id);
 
         return view('eixos.edit', compact(['eixo']));
@@ -57,6 +74,10 @@ class EixoController extends Controller {
 
     public function update(Request $request, $id)
     {
+        if(!UserPermissions::isAuthorized('eixos.edit')) {
+            return view('acessonegado.index');
+        }
+
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
         $new_eixo = Eixo::find($id);
@@ -70,6 +91,10 @@ class EixoController extends Controller {
 
     public function destroy($id)
     {
+        if(!UserPermissions::isAuthorized('eixos.destroy')) {
+            return view('acessonegado.index');
+        }
+
         try
         {
             $eixo = Eixo::find($id);

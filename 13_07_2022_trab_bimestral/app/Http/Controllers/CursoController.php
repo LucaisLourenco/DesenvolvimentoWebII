@@ -43,7 +43,7 @@ class CursoController extends Controller
 
     public function create()
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
+        if(!UserPermissions::isAuthorized('cursos.create')) {
             return view('acessonegado.index');
         }
 
@@ -54,6 +54,10 @@ class CursoController extends Controller
 
     public function store(Request $request)
     {
+        if(!UserPermissions::isAuthorized('cursos.create')) {
+            return view('acessonegado.index');
+        }
+
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
         Curso::create([
@@ -68,10 +72,6 @@ class CursoController extends Controller
 
     public function show($id)
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
-            return view('acessonegado.index');
-        }
-
         $curso = Curso::find($id);
 
         return view('cursos.show', compact(['curso']));
@@ -79,7 +79,7 @@ class CursoController extends Controller
 
     public function edit($id)
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
+        if(!UserPermissions::isAuthorized('cursos.edit')) {
             return view('acessonegado.index');
         }
 
@@ -91,6 +91,10 @@ class CursoController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!UserPermissions::isAuthorized('cursos.edit')) {
+            return view('acessonegado.index');
+        }
+        
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
         $new_curso = Curso::find($id);
@@ -107,7 +111,7 @@ class CursoController extends Controller
 
     public function destroy($id)
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
+        if(!UserPermissions::isAuthorized('cursos.destroy')) {
             return view('acessonegado.index');
         }
 

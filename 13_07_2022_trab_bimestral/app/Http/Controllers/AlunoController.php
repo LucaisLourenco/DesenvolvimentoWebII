@@ -12,7 +12,7 @@ class AlunoController extends Controller
    
     public function index()
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
+        if(!UserPermissions::isAuthorized('alunos.index')) {
             return view('acessonegado.index');
         }
 
@@ -24,7 +24,7 @@ class AlunoController extends Controller
 
     public function create()
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
+        if(!UserPermissions::isAuthorized('alunos.create')) {
             return view('acessonegado.index');
         }
 
@@ -35,6 +35,10 @@ class AlunoController extends Controller
 
     public function store(Request $request)
     {
+        if(!UserPermissions::isAuthorized('alunos.create')) {
+            return view('acessonegado.index');
+        }
+
         $curso = Curso::find($request->curso_id);        
         $aluno = new Aluno();
         $aluno->nome = mb_strtoupper($request->nome);
@@ -51,7 +55,7 @@ class AlunoController extends Controller
 
     public function edit($id)
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
+        if(!UserPermissions::isAuthorized('alunos.edit')) {
             return view('acessonegado.index');
         }
 
@@ -63,6 +67,10 @@ class AlunoController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!UserPermissions::isAuthorized('alunos.edit')) {
+            return view('acessonegado.index');
+        }
+
         $new_aluno = Aluno::find($id);
 
         $new_aluno->update([
@@ -76,7 +84,7 @@ class AlunoController extends Controller
 
     public function destroy($id)
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
+        if(!UserPermissions::isAuthorized('alunos.destroy')) {
             return view('acessonegado.index');
         }
 

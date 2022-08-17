@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Professor;
 use App\Models\Eixo;
 use App\Models\Disciplina_Professor;
+use App\Facades\UserPermissions;
 
 $GLOBALS['regras'] = [
     'ativo' => 'required',
@@ -33,6 +34,10 @@ class ProfessorController extends Controller
 {
     public function index()
     {
+        if(!UserPermissions::isAuthorized('professores.index')) {
+            return view('acessonegado.index');
+        }
+
         $professores = Professor::all();
         $eixos = Eixo::all();
 
@@ -41,6 +46,10 @@ class ProfessorController extends Controller
 
     public function create()
     {
+        if(!UserPermissions::isAuthorized('professores.create')) {
+            return view('acessonegado.index');
+        }
+
         $eixos = Eixo::all();
 
         return view('professores.create', compact(['eixos']));
@@ -48,6 +57,10 @@ class ProfessorController extends Controller
 
     public function store(Request $request)
     {
+        if(!UserPermissions::isAuthorized('professores.create')) {
+            return view('acessonegado.index');
+        }
+
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
         Professor::create([
@@ -70,6 +83,10 @@ class ProfessorController extends Controller
 
     public function edit($id)
     {
+        if(!UserPermissions::isAuthorized('professores.edit')) {
+            return view('acessonegado.index');
+        }
+
         $professor = Professor::find($id);
         $eixos = Eixo::all();
 
@@ -78,6 +95,10 @@ class ProfessorController extends Controller
 
     public function update(Request $request, $id)
     {
+        if(!UserPermissions::isAuthorized('professores.edit')) {
+            return view('acessonegado.index');
+        }
+
         $regras['regras'] = [
             'ativo' => 'required',
             'nome' => 'required|max:100|min:10',
@@ -116,6 +137,10 @@ class ProfessorController extends Controller
 
     public function destroy($id)
     {
+        if(!UserPermissions::isAuthorized('professores.destroy')) {
+            return view('acessonegado.index');
+        }
+
         try
         {    
             $professor = Professor::find($id);

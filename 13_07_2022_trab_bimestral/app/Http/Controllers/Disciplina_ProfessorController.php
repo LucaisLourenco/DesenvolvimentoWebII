@@ -12,7 +12,7 @@ class Disciplina_ProfessorController extends Controller
 {
     public function index()
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
+        if(!UserPermissions::isAuthorized('disciplina_professors.index')) {
             return view('acessonegado.index');
         }
 
@@ -25,7 +25,7 @@ class Disciplina_ProfessorController extends Controller
 
     public function create()
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
+        if(!UserPermissions::isAuthorized('disciplina_professors.create')) {
             return view('acessonegado.index');
         }
 
@@ -55,7 +55,7 @@ class Disciplina_ProfessorController extends Controller
 
     public function store(Request $request)
     {
-        if(!UserPermissions::isAuthorized('cursos.index')) {
+        if(!UserPermissions::isAuthorized('disciplina_professors.create')) {
             return view('acessonegado.index');
         }
 
@@ -98,6 +98,10 @@ class Disciplina_ProfessorController extends Controller
 
     public function destroy($id)
     {
+        if(!UserPermissions::isAuthorized('disciplina_professors.destroy')) {
+            return view('acessonegado.index');
+        }
+
         $disciplina_professors = Disciplina_professor::find($id);
 
         $disciplina_professors->delete();
