@@ -12,10 +12,11 @@ class UserPermissions {
         $perm = Permission::with('role')->where('type_id', $user_type)->get();
 
         foreach($perm as $item) {
-            $sess[$item->role->name] = (boolean) $item->permissao;
+            $sess[$item->role->nome] = (boolean) $item->permissao;
         }
 
         session(['user_permissions' => $sess]);
+
     }
 
     public static function isAuthorized($rule) { 
@@ -28,5 +29,11 @@ class UserPermissions {
 
         return false;
     }
+
+    public static function lista() { 
+        
+        return $permissions = session('user_permissions');
+    }
+
 
 }
