@@ -9,10 +9,10 @@ class UserPermissions {
     public static function loadPermissions($user_type) { 
         
         $sess = Array();    
-        $perm = Permission::where('type_id', $user_type)->get();
+        $perm = Permission::with('role')->where('type_id', $user_type)->get();
 
         foreach($perm as $item) {
-            $sess[$item->regra] = (boolean) $item->permissao;
+            $sess[$item->role->name] = (boolean) $item->permissao;
         }
 
         session(['user_permissions' => $sess]);
