@@ -32,12 +32,12 @@ $GLOBALS['mensagem']= [
 
 class ProfessorController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(Professor::class, 'professor');
+    }
+
     public function index()
     {
-        if(!UserPermissions::isAuthorized('professores.index')) {
-            return view('acessonegado.index');
-        }
-
         $professores = Professor::all();
         $eixos = Eixo::all();
 
@@ -46,10 +46,6 @@ class ProfessorController extends Controller
 
     public function create()
     {
-        if(!UserPermissions::isAuthorized('professores.create')) {
-            return view('acessonegado.index');
-        }
-
         $eixos = Eixo::all();
 
         return view('professores.create', compact(['eixos']));
@@ -57,10 +53,6 @@ class ProfessorController extends Controller
 
     public function store(Request $request)
     {
-        if(!UserPermissions::isAuthorized('professores.create')) {
-            return view('acessonegado.index');
-        }
-
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
         Professor::create([
@@ -81,24 +73,15 @@ class ProfessorController extends Controller
         return view('professores.show', compact(['professor']));
     }
 
-    public function edit($id)
+    public function edit(Professor $professor)
     {
-        if(!UserPermissions::isAuthorized('professores.edit')) {
-            return view('acessonegado.index');
-        }
-
-        $professor = Professor::find($id);
         $eixos = Eixo::all();
 
         return view('professores.edit', compact(['professor','eixos']));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Professor $professor)
     {
-        if(!UserPermissions::isAuthorized('professores.edit')) {
-            return view('acessonegado.index');
-        }
-
         $regras['regras'] = [
             'ativo' => 'required',
             'nome' => 'required|max:100|min:10',
@@ -109,9 +92,7 @@ class ProfessorController extends Controller
 
         $request->validate($regras['regras'],$GLOBALS['mensagem']);
 
-        $new_professor = Professor::find($id);
-
-        $new_professor->update([
+        $professor->update([
             "nome" => mb_strtoupper($request->nome),
             "email" => $request->email,
             "siape" => $request->siape,
@@ -121,8 +102,8 @@ class ProfessorController extends Controller
 
         $disciplina_professors = Disciplina_Professor::all();
         foreach($disciplina_professors as $item) {
-            if($new_professor->id == $item->professor_id) {
-                if($new_professor->ativo != 1) {
+            if($professor->id == $item->professor_id) {
+                if($professor->ativo != 1) {
                     $aux = Disciplina_Professor::find($item->id);
                     $aux->update([
                         "disciplina_id" => $item->disciplina_id,
@@ -135,15 +116,10 @@ class ProfessorController extends Controller
         return redirect()->route('professores.index');
     }
 
-    public function destroy($id)
-    {
-        if(!UserPermissions::isAuthorized('professores.destroy')) {
-            return view('acessonegado.index');
-        }
-
+    public function destroy(Professor $professor)
+    {  
         try
         {    
-            $professor = Professor::find($id);
             $disciplina_professors = Disciplina_Professor::all();
                 foreach($disciplina_professors as $item) {
                     if($professor->id == $item->professor_id) {

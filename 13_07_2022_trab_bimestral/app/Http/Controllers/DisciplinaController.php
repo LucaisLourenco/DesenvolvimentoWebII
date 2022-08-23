@@ -26,12 +26,12 @@ $GLOBALS['mensagem']= [
 
 class DisciplinaController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(Disciplina::class, 'disciplina');
+    }
+
     public function index()
     {
-        if(!UserPermissions::isAuthorized('disciplinas.index')) {
-            return view('acessonegado.index');
-        }
-
         $disciplinas = Disciplina::all();
         $cursos = Curso::all();
 
@@ -40,10 +40,6 @@ class DisciplinaController extends Controller
 
     public function create()
     {
-        if(!UserPermissions::isAuthorized('disciplinas.create')) {
-            return view('acessonegado.index');
-        }
-
         $cursos = Curso::all();
 
         return view('disciplinas.create', compact(['cursos']));
@@ -51,10 +47,6 @@ class DisciplinaController extends Controller
 
     public function store(Request $request)
     {
-        if(!UserPermissions::isAuthorized('disciplinas.create')) {
-            return view('acessonegado.index');
-        }
-
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
         Disciplina::create([
@@ -73,29 +65,18 @@ class DisciplinaController extends Controller
         return view('disciplinas.show', compact(['disciplina']));
     }
 
-    public function edit($id)
+    public function edit(Disciplina $disciplina)
     {
-        if(!UserPermissions::isAuthorized('disciplinas.edit')) {
-            return view('acessonegado.index');
-        }
-
-        $disciplina = Disciplina::find($id);
         $cursos = Curso::all();
 
         return view('disciplinas.edit', compact(['disciplina','cursos']));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Disciplina $disciplina)
     {
-        if(!UserPermissions::isAuthorized('disciplinas.edit')) {
-            return view('acessonegado.index');
-        }
-
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
-        $new_disciplina = Disciplina::find($id);
-
-        $new_disciplina->update([
+        $disciplina->update([
             "nome" => mb_strtoupper($request->nome),
             "carga" => $request->carga,
             "curso_id" => $request->curso_id
@@ -104,15 +85,10 @@ class DisciplinaController extends Controller
         return redirect()->route('disciplinas.index');
     }
 
-    public function destroy($id)
+    public function destroy(Disciplina $disciplina)
     {
-        if(!UserPermissions::isAuthorized('disciplinas.destroy')) {
-            return view('acessonegado.index');
-        }
-
         try 
         {
-            $disciplina = Disciplina::find($id);
             $disciplina_professors = Disciplina_Professor::all();
             foreach($disciplina_professors as $item) {
                 if($disciplina->id == $item->disciplina_id) {

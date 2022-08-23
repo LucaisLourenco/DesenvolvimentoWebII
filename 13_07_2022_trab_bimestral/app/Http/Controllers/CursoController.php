@@ -29,24 +29,20 @@ $GLOBALS['mensagem']= [
 
 class CursoController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(Curso::class, 'curso');
+    }
+    
     public function index()
     {
         $cursos = Curso::all();
         $eixos = Eixo::all();
-
-        if(!UserPermissions::isAuthorized('cursos.index')) {
-            return view('acessonegado.index');
-        }
 
         return view('cursos.index', compact(['cursos','eixos']));
     }
 
     public function create()
     {
-        if(!UserPermissions::isAuthorized('cursos.create')) {
-            return view('acessonegado.index');
-        }
-
         $eixos = Eixo::all();
 
         return view('cursos.create', compact(['eixos']));
@@ -54,10 +50,6 @@ class CursoController extends Controller
 
     public function store(Request $request)
     {
-        if(!UserPermissions::isAuthorized('cursos.create')) {
-            return view('acessonegado.index');
-        }
-
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
 
         Curso::create([
@@ -77,29 +69,18 @@ class CursoController extends Controller
         return view('cursos.show', compact(['curso']));
     }
 
-    public function edit($id)
+    public function edit(Curso $curso)
     {
-        if(!UserPermissions::isAuthorized('cursos.edit')) {
-            return view('acessonegado.index');
-        }
-
-        $curso = Curso::find($id);
         $eixos = Eixo::all();
 
         return view('cursos.edit', compact(['curso','eixos']));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Curso $curso)
     {
-        if(!UserPermissions::isAuthorized('cursos.edit')) {
-            return view('acessonegado.index');
-        }
-        
         $request->validate($GLOBALS['regras'],$GLOBALS['mensagem']);
-
-        $new_curso = Curso::find($id);
-
-        $new_curso->update([
+     
+        $curso->update([
             "nome" => mb_strtoupper($request->nome),
             "sigla" => $request->sigla,
             "tempo" => $request->tempo,
@@ -109,15 +90,10 @@ class CursoController extends Controller
         return redirect()->route('cursos.index');
     }
 
-    public function destroy($id)
+    public function destroy(Curso $curso)
     {
-        if(!UserPermissions::isAuthorized('cursos.destroy')) {
-            return view('acessonegado.index');
-        }
-
         try 
         {    
-            $curso = Curso::find($id);
             $curso->delete();
 
         }   catch(\Illuminate\Database\QueryException $ex)

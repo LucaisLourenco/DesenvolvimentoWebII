@@ -9,13 +9,12 @@ use App\Facades\UserPermissions;
 
 class AlunoController extends Controller
 {
-   
+    public function __construct() {
+        $this->authorizeResource(Aluno::class, 'aluno');
+    }
+
     public function index()
     {
-        if(!UserPermissions::isAuthorized('alunos.index')) {
-            return view('acessonegado.index');
-        }
-
         $alunos = Aluno::with(['curso'])->get();
         $alunos->toJson();
 
@@ -24,10 +23,6 @@ class AlunoController extends Controller
 
     public function create()
     {
-        if(!UserPermissions::isAuthorized('alunos.create')) {
-            return view('acessonegado.index');
-        }
-
         $cursos = Curso::all();
 
         return view('alunos.create', compact(['cursos']));
@@ -35,10 +30,6 @@ class AlunoController extends Controller
 
     public function store(Request $request)
     {
-        if(!UserPermissions::isAuthorized('alunos.create')) {
-            return view('acessonegado.index');
-        }
-
         $curso = Curso::find($request->curso_id);        
         $aluno = new Aluno();
         $aluno->nome = mb_strtoupper($request->nome);
@@ -53,27 +44,16 @@ class AlunoController extends Controller
         
     }
 
-    public function edit($id)
+    public function edit(Aluno $aluno)
     {
-        if(!UserPermissions::isAuthorized('alunos.edit')) {
-            return view('acessonegado.index');
-        }
-
-        $aluno = Aluno::find($id);
         $cursos = Curso::all();
 
         return view('alunos.edit', compact(['aluno','cursos']));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Aluno $aluno)
     {
-        if(!UserPermissions::isAuthorized('alunos.edit')) {
-            return view('acessonegado.index');
-        }
-
-        $new_aluno = Aluno::find($id);
-
-        $new_aluno->update([
+        $aluno->update([
             "nome" => mb_strtoupper($request->nome),
             "curso_id" => $request->curso_id
         ]);
@@ -82,15 +62,10 @@ class AlunoController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Aluno $aluno)
     {
-        if(!UserPermissions::isAuthorized('alunos.destroy')) {
-            return view('acessonegado.index');
-        }
-
         try 
         {    
-            $aluno = Aluno::find($id);
             $aluno->delete();
 
         }   catch(\Illuminate\Database\QueryException $ex)
