@@ -46,7 +46,7 @@
                             </svg>
                         </a>
                     </td>
-                    <form action="{{ route('cursos.destroy', $item) }}" method="POST" id="form_{{$item}}">
+                    <form action="{{ route('cursos.destroy', $item) }}" method="POST" id="form_{{$item['id']}}">
                         @csrf
                         @method('DELETE')
                     </form>
