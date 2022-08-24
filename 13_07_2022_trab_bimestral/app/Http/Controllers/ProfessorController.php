@@ -33,7 +33,7 @@ $GLOBALS['mensagem']= [
 class ProfessorController extends Controller
 {
     public function __construct() {
-        $this->authorizeResource(Professor::class, 'professor');
+        $this->authorizeResource(Professor::class, 'professore');
     }
 
     public function index()
@@ -73,14 +73,14 @@ class ProfessorController extends Controller
         return view('professores.show', compact(['professor']));
     }
 
-    public function edit(Professor $professor)
+    public function edit(Professor $professore)
     {
         $eixos = Eixo::all();
 
-        return view('professores.edit', compact(['professor','eixos']));
+        return view('professores.edit', compact(['professore','eixos']));
     }
 
-    public function update(Request $request, Professor $professor)
+    public function update(Request $request, Professor $professore)
     {
         $regras['regras'] = [
             'ativo' => 'required',
@@ -92,7 +92,7 @@ class ProfessorController extends Controller
 
         $request->validate($regras['regras'],$GLOBALS['mensagem']);
 
-        $professor->update([
+        $professore->update([
             "nome" => mb_strtoupper($request->nome),
             "email" => $request->email,
             "siape" => $request->siape,
@@ -102,8 +102,8 @@ class ProfessorController extends Controller
 
         $disciplina_professors = Disciplina_Professor::all();
         foreach($disciplina_professors as $item) {
-            if($professor->id == $item->professor_id) {
-                if($professor->ativo != 1) {
+            if($professore->id == $item->professor_id) {
+                if($professore->ativo != 1) {
                     $aux = Disciplina_Professor::find($item->id);
                     $aux->update([
                         "disciplina_id" => $item->disciplina_id,
@@ -116,13 +116,13 @@ class ProfessorController extends Controller
         return redirect()->route('professores.index');
     }
 
-    public function destroy(Professor $professor)
+    public function destroy(Professor $professore)
     {  
         try
         {    
             $disciplina_professors = Disciplina_Professor::all();
                 foreach($disciplina_professors as $item) {
-                    if($professor->id == $item->professor_id) {
+                    if($professore->id == $item->professor_id) {
                         $aux = Disciplina_Professor::find($item->id);
                         $aux->update([
                             "disciplina_id" => $item->disciplina_id,
@@ -131,7 +131,7 @@ class ProfessorController extends Controller
                     }
                 }
 
-            $professor->delete();
+            $professore->delete();
             
         } catch(\Illuminate\Database\QueryException $ex)
         { 

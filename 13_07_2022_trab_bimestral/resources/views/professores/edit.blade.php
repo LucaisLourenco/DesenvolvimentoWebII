@@ -4,7 +4,7 @@
 
 @section('conteudo')
 
-<form action="{{ route('professores.update', $professor['id']) }}" method="POST">
+<form action="{{ route('professores.update', $professore->id) }}" method="POST">
     @csrf
     @method('PUT')
     <div class="row">
@@ -12,11 +12,11 @@
             <div class="mb-3" data-toggle="buttons">
                 <label class="btn btn-primary">
                     <input type="radio" class="{{ $errors->has('ativo') ? 'is-invalid' : '' }}" data-toggle="button" name="ativo" 
-                        id="option1" value="1" {{ $professor['ativo'] == '1' ? 'checked' : ' '}} @if($professor->ativo) selected="true" @endif> Ativo
+                        id="option1" value="1" {{ $professore['ativo'] == '1' ? 'checked' : ' '}} @if($professore->ativo) selected="true" @endif> Ativo
                 </label>
                 <label class="btn btn-danger">
                     <input type="radio" class="{{ $errors->has('ativo') ? 'is-invalid' : '' }}" data-toggle="button" name="ativo" 
-                        id="option2" value="0" {{ $professor['ativo'] == '0' ? 'checked' : ' '}} @if($professor->ativo) selected="true" @endif> Desabilitado
+                        id="option2" value="0" {{ $professore['ativo'] == '0' ? 'checked' : ' '}} @if($professore->ativo) selected="true" @endif> Desabilitado
                 </label>
                 @if($errors->has('ativo'))
                     <div class='invalid-feedback'>
@@ -34,7 +34,7 @@
                         class="form-control {{ $errors->has('nome') ? 'is-invalid' : '' }}" 
                         name="nome" 
                         placeholder="Nome"
-                        value="{{$professor['nome']}}"
+                        value="{{$professore->nome}}"
                     />
                     @if($errors->has('nome'))
                         <div class='invalid-feedback'>
@@ -53,7 +53,7 @@
                         class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" 
                         name="email" 
                         placeholder="email"
-                        value="{{$professor['email']}}"
+                        value="{{$professore->email}}"
                     />
                     @if($errors->has('email'))
                         <div class='invalid-feedback'>
@@ -72,7 +72,7 @@
                         class="form-control {{ $errors->has('siape') ? 'is-invalid' : '' }}" 
                         name="siape" 
                         placeholder="siape"
-                        value="{{$professor['siape']}}"
+                        value="{{$professore['siape']}}"
                     />
                     @if($errors->has('siape'))
                         <div class='invalid-feedback'>
@@ -88,7 +88,7 @@
                 <div class="form-floating mb-3">
                     <select name="eixo_id" class="form-control {{ $errors->has('eixo_id') ? 'is-invalid' : '' }}">
                         @foreach ($eixos as $item) 
-                            <option value="{{$item->id}}" @if($item->id == $professor->eixo_id) selected="true" @endif>
+                            <option value="{{$item->id}}" @if($item->id == $professore->eixo_id) selected="true" @endif>
                                 {{$item->nome}}
                             </option>
                         @endforeach
