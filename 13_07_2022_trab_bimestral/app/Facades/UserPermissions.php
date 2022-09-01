@@ -31,9 +31,6 @@ class UserPermissions {
     }
 
     public static function lista() { 
-        
         return $permissions = session('user_permissions');
     }
-
-
 }
